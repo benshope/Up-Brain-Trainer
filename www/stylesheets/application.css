@@ -3,23 +3,10 @@
   -webkit-touch-callout: none; /* Disable touch callouts */
 }
 
-body{
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
 input, textarea, [contenteditable] * {
   -webkit-user-select: auto;  /* Allow selection for input elements and those with contenteditable attribute */
 }
 
 .content-padded {
-    padding: 10px;
-}
-
-#myImage {
-    width: 300px;
-    margin: auto;
-    display: block;
+  padding: 10px;
 }

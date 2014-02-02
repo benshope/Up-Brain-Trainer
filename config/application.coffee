@@ -1,10 +1,10 @@
 # For an explanation of the steroids.config properties, see the guide at
 # http://guides.appgyver.com/steroids/guides/project_configuration/config-application-coffee/
 
-steroids.config.name = "Steroids Tutorial"
+steroids.config.name = "zenback"
 
 # -- Initial Location --
-steroids.config.location = "http://localhost/accelerometerExample.html"
+steroids.config.location = "http://localhost/index.html"
 
 # -- Tab Bar --
 # steroids.config.tabBar.enabled = true
@@ -12,12 +12,7 @@ steroids.config.location = "http://localhost/accelerometerExample.html"
 #   {
 #     title: "Index"
 #     icon: "icons/pill@2x.png"
-#     location: "http://localhost/views/accelerometerExample.html"
-#   },
-#   {
-#     title: "Welcome"
-#     icon: ""
-#     location: "http://localhost/accelerometerExample.html"
+#     location: "http://localhost/index.html"
 #   },
 #   {
 #     title: "Internet"
