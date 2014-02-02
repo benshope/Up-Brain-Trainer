@@ -12,9 +12,6 @@
                 margin: 0px;
             }
 
-            #footerTable {
-                width: 100%;
-            }
             footer {
                 position:absolute;
                 bottom:0;
@@ -42,11 +39,9 @@
  <script language="javascript">
 
             var accelerometer = null;
-            var canvas_settings;
             var background;
-            var top = -5;
-            var left = -5;
-            var canvas;
+            var vertical = 0;
+            var horizontal = 0;
 
             document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -56,10 +51,13 @@
             }
  
             function accelerationReceived(acceleration) {
-              top = Math.min(Math.max(top+acceleration.y*2, -10),0);
-              left = Math.min(Math.max(left+acceleration.x*2, -10),0);
-              background.style.top = left + "px";
-              background.style.left = left + "%";
+              vertical = vertical/2 + (acceleration.y * 2)/2;
+              horizontal = horizontal/2 + (acceleration.x * 2)/2;
+
+              background.style.backgroundPosition = horizontal + "px " + vertical + "px";
+
+              var resultElement = document.getElementById('accelerometer');
+              resultElement.innerHTML = '<strong>Time:</strong> ' + acceleration.timestamp;
             }
 
             function accelerometerError() {
@@ -74,9 +72,12 @@
         
     </head>
     <body>
-        <div>HOLLA!!!
+        
+
+        <div style="background: rgba(0, 0, 0, 0);">HOLLA!!!<br><br>
         Zen Back</div>
-        <div id="background" style="position:fixed; left:-5%; top: 5%; width: 110%; height: 110%; background-image: url(http://localhost/img/background.jpg); background-size: cover; z-index:-5; /*border: solid red 1px;*/"></div>
+        <div id="background" style="position: fixed; overflow: visible; left: -20px; top: -20px; width: 120%; height: 120%; background-image: url(http://localhost/img/background.jpg); background-size: cover; z-index:0;"></div>
+        <footer><div id="accelerometer">Waiting for accelerometer...</div></footer>
     </body>
 </html>
 

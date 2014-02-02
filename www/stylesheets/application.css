@@ -7,6 +7,4 @@ input, textarea, [contenteditable] * {
   -webkit-user-select: auto;  /* Allow selection for input elements and those with contenteditable attribute */
 }
 
-.content-padded {
-  padding: 10px;
-}
+
