@@ -37,24 +37,45 @@
 
   <script src="/javascripts/application.js"></script>
  <script language="javascript">
-
             var accelerometer = null;
-            var background;
             var vertical = 0;
             var horizontal = 0;
+            var sound = null;
 
             document.addEventListener("deviceready", onDeviceReady, false);
 
             function onDeviceReady() {
-                accelerometer = navigator.accelerometer.watchAcceleration(accelerationReceived, accelerometerError, {frequency: 25});
-                background = document.getElementById('background');
+                //accelerometer = navigator.accelerometer.watchAcceleration(accelerationReceived, accelerometerError, {frequency: 25});
+                
+                steroids.audio.prime();
+                if (device.platform === "iOS") {
+                  sound = new Media("http://localhost/sounds/rockGuitar.mp3", null, mediaError);
+                } 
+                else {
+                  steroids.on("ready", function() {
+                    sound = new Media("file://" + steroids.app.absolutePath + "/sounds/rockGuitar.mp3", null, mediaError);
+                  });
+                }
             }
+
+            function playAudio() {
+              if (sound) {
+                sound.play();
+              }
+            }
+
+            function mediaError(error) {
+              alert("Error accessing the Media object!\n"+
+                    "Error code: " + error.code + "\n" +
+                    "Error message: " + error.message);
+            }
+
  
             function accelerationReceived(acceleration) {
               vertical = vertical/2 + (acceleration.y * 2)/2;
               horizontal = horizontal/2 + (acceleration.x * 2)/2;
 
-              background.style.backgroundPosition = horizontal + "px " + vertical + "px";
+              document.getElementById('background').style.backgroundPosition = horizontal + "px " + vertical + "px";
 
               var resultElement = document.getElementById('accelerometer');
               resultElement.innerHTML = '<strong>Time:</strong> ' + acceleration.timestamp;
@@ -67,16 +88,15 @@
                     accelerometer = null;
                 }
             }
-
         </script>
         
     </head>
-    <body>
+    <body id="background" style="background: url(http://localhost/img/background.jpg) repeat center center fixed; background-size: cover;">
         
+        <div class="topcoat-button--cta full center" ontouchend="playAudio()">Play</div>
 
         <div style="background: rgba(0, 0, 0, 0);">HOLLA!!!<br><br>
         Zen Back</div>
-        <div id="background" style="position: fixed; overflow: visible; left: -20px; top: -20px; width: 120%; height: 120%; background-image: url(http://localhost/img/background.jpg); background-size: cover; z-index:0;"></div>
         <footer><div id="accelerometer">Waiting for accelerometer...</div></footer>
     </body>
 </html>
