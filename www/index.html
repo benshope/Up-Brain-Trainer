@@ -16,21 +16,25 @@
   <script src="/javascripts/zepto.js"></script>
   <script src="/javascripts/application.js"></script>
 </head>
-  <body id="background">
-  <div class="border">
+<body id="background">
+
+<div class="light-border">
+  <div class="dark-border">
     <div class="grid">
-      <div>1uno</div>
+      <div style="border-radius: 5px 0 0 0;">1uno</div>
       <div>1due</div>
-      <div>1tre</div>
+      <div style="border-radius: 0 5px 0 0;">1tre</div>
       <div>2uno</div>
       <div>2due</div>
       <div>2tre</div>
-      <div>3uno</div>
+      <div style="border-radius: 0 0 0 5px;">3uno</div>
       <div>3due</div>
-      <div>3tre</div>
+      <div style="border-radius: 0 0 5px 0;">3tre</div>
     </div>
   </div>
-  <div class="topcoat-button--cta" ontouchend="playAudio()">Play</div>
+</div>
+
+<div class="topcoat-button center full" ontouchend="playAudio()">Play</div>
 
 <!-- <h1><i>n</i>-back</h1>
   <div id="wrapper"></div>
