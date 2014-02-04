@@ -7,6 +7,20 @@ input, textarea, [contenteditable] * {
   -webkit-user-select: auto;  /* Allow selection for input elements and those with contenteditable attribute */
 }
 
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+}
+
+footer {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:40px;   
+  background:#ccc;
+}
+
 #background {
 background: url(http://localhost/img/background.jpg) repeat center center fixed; 
 background-size: cover;
@@ -21,6 +35,7 @@ background-size: cover;
     display: -webkit-flex;
     flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
+
 }
 
 .grid > div {
@@ -28,8 +43,18 @@ background-size: cover;
     background-color: rgba(0,0,0,0.2);
     border: 1px solid rgba(0,0,0,0.1);
     text-align:center;
+    font-weight: bold;
+
     box-sizing: border-box;
 
     flex: 1 1 33%;
     -webkit-flex: 1 1 33%;
+
+    -webkit-justify-content: center;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    text-align: center;
 }
