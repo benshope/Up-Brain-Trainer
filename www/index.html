@@ -18,23 +18,51 @@
 </head>
 <body ng-controller="ZenCtrl">
 
+  <h2 class="center">Zen Back</h2>
+  <div class="dark-border">
+    
+  <div class="grid">
+    <div ng-repeat="cell in cells">
+      {{cell}}
+    </div>
+  </div>
 
-<span>{{remaining()}} of {{todos.length}} remaining</span>
-[ <a href="" ng-click="archive()">archive</a> ]
-<ul class="unstyled">
-  <li ng-repeat="todo in todos">
-    <input type="checkbox" ng-model="todo.done">
-    <span class="done-{{todo.done}}">{{todo.text}}</span>
-  </li>
-</ul>
-<form ng-submit="addTodo()">
-  <input type="text" ng-model="todoText"  size="30"
-         placeholder="add new todo here">
-  <input class="btn-primary" type="submit" value="add">
+    <div style="margin: 10%; width: 80%;" class="topcoat-button center full" ontouchend="playAudio()">Play</div>
+  </div>
+
+<input type="number"
+       ng-model="{num_cells}">
+
+<h4>Difficulty</h4>
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <label for="difficulty" class="sr-only">N</label>
+    <select ng-model="difficulty" ng-options="d for d in difficulty_options" class="form-control" id="difficulty">
+    </select>
+  </div>
 </form>
 
-
-
+<h4>Progress</h4>
+<table class="info">
+  <tr>
+    <td class="type">Accuracy:</td><td class="value">{{accuracy}}%<td>
+  </tr> 
+  <tr>
+    <td class="type">Correct:</td><td class="value">{{success}}<td>
+  </tr> 
+  <tr>
+    <td class="type">False positives:</td><td class="value">{{false_positives}}<td>
+  </tr> 
+  <tr>
+    <td class="type">False negatives:</td><td class="value">{{false_negatives}}<td>
+  </tr> 
+</table>
+<h4>Keyboard Shortcuts</h4>
+<table class="controls">
+  <tr ng-repeat="shortcut in shortcuts">
+    <td class="key">{{shortcut.key}}</td><td class="usage">{{shortcut.description}}<td>
+  </tr> 
+</table>
 
 
 <!-- <a id="fullscreenButton" class="fadable" href="javascript:onFullscreen(event);">fullscreen</a>
@@ -43,33 +71,6 @@
 
 </canvas> -->
 
-
-
-
-
-
-
-
-
-
-<!-- <h2 class="center">Zen Back</h2>
-<div class="dark-border">
-  
-  <div class="grid">
-    <div>[X]</div>
-    <div>[X]</div>
-    <div>[X]</div>
-    <div>[X]</div>
-    <div>[X]</div>
-    <div>[X]</div>
-    <div>[X]</div>
-    <div>[X]</div>
-    <div>[X]</div>
-  </div>
-
-
-  <div style="margin: 10%; width: 80%;" class="topcoat-button center full" ontouchend="playAudio()">Play</div>
-</div> -->
 
 <!-- <div style="height:20px;" class="grid">
   <div ng-repeat="">Color</div>
