@@ -3,53 +3,34 @@
 function GameCtrl($scope) {
 
   $scope.difficulty = 2;
-  $scope.visual_items = [1, 3, 5, 7];
-  $scope.audio_items = [0, 1, 2, 3];
-  $scope.difficulty_options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  $scope.items = [1, 3, 5, 7];
+
+  $scope.current_item = 4; // DELETE LATER
   
-  $scope.stop = function() {
-    $scope.status = "paused";
-
-    $scope.tries = 0;
-    $scope.false_guesses = 0;
-    $scope.success = 0;
-    $scope.accuracy = 0;
-
-    $scope.visual_item = null;
-    $scope.visual_queue = [];
-    $scope.audio_item = null;
-    $scope.audio_queue = [];
-
-    return $scope.$apply();
-  };
 
   $scope.start = function() {
-    $scope.status = "running";
+    $scope.guesses = 0;
+    $scope.false_guesses = 0;
+    $scope.true_guesses = 0;
+    $scope.accuracy = 0;
+
+    $scope.current_item = null;
+    $scope.past_items = [];
+
     return $scope.next();
   };
 
   $scope.next = function() {
-    if ($scope.visual_item !== null) {
-      $scope.visual_queue.unshift($scope.visual_item);
-    }
-    $scope.visual_item = $scope.visual_items[Math.floor(Math.random() * $scope.visual_items.length)];
-    if ($scope.audio_item !== null) {
-      $scope.audio_queue.unshift($scope.audio_item);
-    }
-    $scope.audio_item = $scope.audio_items[Math.floor(Math.random() * $scope.audio_items.length)];
-    document.getElementById("audio-" + $scope.audio_item).play();
+    $scope.current_item = $scope.items[Math.floor(Math.random() * $scope.items.length)];
+    $scope.past_items.push($scope.item);
+
     return $scope.$apply();
   };
 
+  $scope.evaluate = function(guess) {
+    $scope.guesses += 1;
 
-  $scope.evaluate = function(visual, audio) {
-    var audio_answer, success, visual_answer;
-
-    $scope.tries += 1;
-
-    success = false;
-
-    if ($scope.visual_queue.length < $scope.difficulty) {
+    if ($scope.past_items.length < $scope.difficulty) {
       if (!visual) {
         success = true;
       } else {
@@ -90,17 +71,14 @@ function GameCtrl($scope) {
   };
 
 
-
-
   // ADD THE FUNCTIONS TO EVALUATE IF THE USER PRESSED THE RIGHT THING
-  Mousetrap.bind('up', function(e) {
-    if ($scope.status === 'running') {
-      return $scope.evaluate(false, false);
-    }
-  });
-  
+  // Mousetrap.bind('up', function(e) {
+  //   if ($scope.status === 'running') {
+  //     return $scope.evaluate(false, false);
+  //   }
+  // });
 
-});
+};
 
 
 

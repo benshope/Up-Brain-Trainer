@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="app">
 <head>
   <title>Zen Back</title>
   <meta charset="utf8">
@@ -24,14 +24,11 @@
 
 <body ng-controller="GameCtrl">
 
-<h2 class="center">Zen Back {{grid_side}}</h2>
+<h2 class="center">Zen Back</h2>
 
+{{current_item}}
 
-
-
-
-
-  <div class="dark-border">
+<!--   <div class="dark-border">
     <div class="grid">
       <div ng-repeat="cell in cells">
         {{cell}}
@@ -39,11 +36,11 @@
     </div>
   </div>
 
-<input type="number" ng-model="ZenCtrl.num_cells" required >
+<input type="number" ng-model="ZenCtrl.num_cells" required > -->
 
 <!-- <canvas id="surface" width="1677" height="283"></canvas> -->
-
 <div style="display:none;" id="background"></div>
+
 </body>
 
 </html>
