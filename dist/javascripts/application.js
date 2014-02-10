@@ -5,13 +5,13 @@ function GameCtrl($scope) {
   $scope.difficulty = 2;
   $scope.items = [1, 3, 5, 7];
 
-  $scope.current_item = 4; // DELETE LATER
-  
-
   $scope.start = function() {
+    // SET ONE ANSWER BUTTON THAT MOVES FORWARD
     $scope.guesses = 0;
+
     $scope.false_guesses = 0;
     $scope.true_guesses = 0;
+
     $scope.accuracy = 0;
 
     $scope.current_item = null;
@@ -24,6 +24,7 @@ function GameCtrl($scope) {
     $scope.current_item = $scope.items[Math.floor(Math.random() * $scope.items.length)];
     $scope.past_items.push($scope.item);
 
+    // TEST FOR END CONDITIONS
     return $scope.$apply();
   };
 
@@ -31,45 +32,20 @@ function GameCtrl($scope) {
     $scope.guesses += 1;
 
     if ($scope.past_items.length < $scope.difficulty) {
-      if (!visual) {
-        success = true;
-      } else {
-        $scope.false_positives += 1;
+        return $scope.next()
+    }
+    else {
+      // CHECK THEIR ANSWER
+      item_nback = $scope.visual_queue[-$scope.difficulty];
+      if (item_nback === guess) {
+        $scope.true_guesses += 1;
+        return $scope.next();
       }
-    } else {
-
-      visual_answer = $scope.visual_queue.pop() === $scope.visual_item;
-      audio_answer = $scope.audio_queue.pop() === $scope.audio_item;
-
-      if (visual === visual_answer && audio === audio_answer) {
-        success = true;
-      }
-      if (visual_answer && !visual) {
-        $scope.false_negatives += 1;
-      }
-      if (audio_answer && !audio) {
-        $scope.false_negatives += 1;
-      }
-      if (!visual_answer && visual) {
-        $scope.false_positives += 1;
-      }
-      if (!audio_answer && audio) {
-        $scope.false_positives += 1;
+      else {
+        $scope.false_guesses +=1;
       }
     }
-    if (success) {
-      $scope.success += 1;
-      $scope.current_chain += 1;
-      if ($scope.current_chain > $scope.longest_chain) {
-        $scope.longest_chain = $scope.current_chain;
-      }
-    } else {
-      $scope.current_chain = 0;
-    }
-    $scope.accuracy = Math.round(100.0 * $scope.success / $scope.tries);
-    return $scope.next();
   };
-
 
   // ADD THE FUNCTIONS TO EVALUATE IF THE USER PRESSED THE RIGHT THING
   // Mousetrap.bind('up', function(e) {
