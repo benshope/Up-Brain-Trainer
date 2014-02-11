@@ -31,11 +31,17 @@
 
 <div>Difficulty: {{difficulty}}</div>
 <div>Grid Size: {{grid_size}}</div>
-<i class="fa fa-camera-retro"></i>
+<h4>Settings:</h4>
+<a href="" ng-click="grid_size = increase(grid_size, 6)"><i class="fa fa-th-large"></i>Grid Size</a>
+<a href="" ng-click="difficulty = increase(difficulty, 6)"><i class="fa fa-arrow-left"></i>{{difficulty+1}}-Back</a>
+<a href=""><i class="fa fa-sort-numeric-desc"></i>Math</a>
+<a href=""><i class="fa fa-pencil-square-o"></i>Shapes</a>
+<a href=""><i class="fa fa-tint"></i>Colors</a>
+<a href=""><i class="fa fa-volume-up"></i>Audio</a>
 
-<p><i class="fa fa-camera-retro fa-lg"></i> fa-camera-retro</p>
-<a href="" ng-click="grid_size = increase(grid_size, 6)">Change<i class="fa fa-square-o fa-4x pull-left fa-muted"></i> Grid Size</a>
-<a href="" ng-click="difficulty = increase(difficulty, 6)">Change Difficulty</a>
+<h4>Other:</h4>
+<a href="" ng-click=""><i class="fa fa-heart text-danger"></i>Donate</a>
+<a href="" ng-click=""><i class="fa fa-info-circle"></i>How to Play</a>
 
 <!--   <div class="dark-border">
     <div class="grid">
@@ -44,8 +50,6 @@
       </div>
     </div>
   </div>
-
-<input type="number" ng-model="ZenCtrl.num_cells" required > -->
 
 <!-- <canvas id="surface" width="1677" height="283"></canvas> -->
 <div style="display:none;" id="background"></div>

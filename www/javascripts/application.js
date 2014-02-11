@@ -3,7 +3,7 @@
 function GameCtrl($scope) {
   $scope.grid_size = 0
 
-  $scope.difficulty = 2;
+  $scope.difficulty = 1;
   $scope.items = [1, 3, 5, 7];
 
   $scope.current_item = $scope.items[Math.floor(Math.random() * $scope.items.length)];
