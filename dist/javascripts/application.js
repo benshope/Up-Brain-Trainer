@@ -28,6 +28,8 @@ function GameCtrl($scope) {
     return $scope.$apply();
   };
 
+  $scope.start();
+
   $scope.evaluate = function(guess) {
     $scope.guesses += 1;
 
