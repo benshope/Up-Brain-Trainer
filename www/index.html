@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width">
 
   <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
-  <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="/stylesheets/application.css" />
 
   <!--  <script src="/javascripts/onerror.js"></script>
@@ -26,9 +26,16 @@
 
 <h2 class="center">Zen Back</h2>
 
-<div>{{current_item}}</div>
-
+<div>Current Index: {{current_item}}</div>
 <a href="" ng-click="next()">Next</a>
+
+<div>Difficulty: {{difficulty}}</div>
+<div>Grid Size: {{grid_size}}</div>
+<i class="fa fa-camera-retro"></i>
+
+<p><i class="fa fa-camera-retro fa-lg"></i> fa-camera-retro</p>
+<a href="" ng-click="grid_size = increase(grid_size, 6)">Change<i class="fa fa-square-o fa-4x pull-left fa-muted"></i> Grid Size</a>
+<a href="" ng-click="difficulty = increase(difficulty, 6)">Change Difficulty</a>
 
 <!--   <div class="dark-border">
     <div class="grid">

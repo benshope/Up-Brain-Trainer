@@ -1,9 +1,16 @@
 
 
 function GameCtrl($scope) {
+  $scope.grid_size = 0
 
   $scope.difficulty = 2;
   $scope.items = [1, 3, 5, 7];
+
+  $scope.current_item = $scope.items[Math.floor(Math.random() * $scope.items.length)];
+
+  $scope.increase = function(value, max) {
+        return (value + 1) % max;
+  };
 
   $scope.start = function() {
     // SET ONE ANSWER BUTTON THAT MOVES FORWARD
@@ -25,7 +32,7 @@ function GameCtrl($scope) {
     $scope.past_items.push($scope.item);
 
     // TEST FOR END CONDITIONS
-    return $scope.$apply();
+
   };
 
   $scope.start();
