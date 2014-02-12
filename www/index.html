@@ -25,22 +25,21 @@
 <body ng-controller="GameCtrl">
 
 <h2 class="center">Zen Back</h2>
-
+{{audio_on}}
 <div>Current Index: {{current_item}}</div>
 <a href="" ng-click="next()">Next</a>
 
 <div>Difficulty: {{difficulty}}</div>
 <div>Grid Size: {{grid_size}}</div>
 <h4>Settings:</h4>
-<a href="" ng-click="grid_size = increase(grid_size, 6)"><i class="fa fa-th-large"></i>Grid Size</a>
-<a href="" ng-click="difficulty = increase(difficulty, 6)"><i class="fa fa-arrow-left"></i>{{difficulty+1}}-Back</a>
-<a href=""><i class="fa fa-sort-numeric-desc"></i>Math</a>
-<a href=""><i class="fa fa-pencil-square-o"></i>Shapes</a>
+<a href="" ng-click="grid_size = increase(grid_size, 1, 6)"><i class="fa fa-th-large"></i>Grid Size</a>
+<a href="" ng-click="difficulty = increase(difficulty, 1, 6)"><i class="fa fa-arrow-left"></i>{{difficulty}}-Back</a>
 <a href=""><i class="fa fa-tint"></i>Colors</a>
-<a href=""><i class="fa fa-volume-up"></i>Audio</a>
+<a href="" ng-click="audio_on = !audio_on"><i class="fa" ng-class="{'fa-volume-up': audio_on, 'fa-volume-off': !audio_on}"></i>Audio</a>
+<a href=""><i class="fa fa-sort-numeric-desc"></i>Math</a>
 
 <h4>Other:</h4>
-<a href="" ng-click=""><i class="fa fa-heart text-danger"></i>Donate</a>
+<a href="" ng-click=""><i class="fa fa-heart text-danger"></i>Please Donate</a>
 <a href="" ng-click=""><i class="fa fa-info-circle"></i>How to Play</a>
 
 <!--   <div class="dark-border">
@@ -49,10 +48,10 @@
         {{cell}}
       </div>
     </div>
-  </div>
+  </div> -->
 
-<!-- <canvas id="surface" width="1677" height="283"></canvas> -->
-<div style="display:none;" id="background"></div>
+<!-- <canvas id="surface" width="1677" height="283"></canvas>
+<div style="display:none;" id="background"></div> -->
 
 </body>
 

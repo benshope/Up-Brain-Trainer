@@ -1,16 +1,25 @@
 
 
 function GameCtrl($scope) {
-  $scope.grid_size = 0
-
   $scope.difficulty = 1;
+
+  $scope.grid_size = 1;
+  $scope.colors_on = false;
+  $scope.audio_on = false;
+  $scope.math_on = false;
+
   $scope.items = [1, 3, 5, 7];
 
   $scope.current_item = $scope.items[Math.floor(Math.random() * $scope.items.length)];
 
-  $scope.increase = function(value, max) {
-        return (value + 1) % max;
+  $scope.increase = function(value, minimum, maximum) {
+        return Math.max((value + 1) % maximum, minimum);
   };
+
+  // $scope.grid = function() {
+
+
+  // };
 
   $scope.start = function() {
     // SET ONE ANSWER BUTTON THAT MOVES FORWARD
