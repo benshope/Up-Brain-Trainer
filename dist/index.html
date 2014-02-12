@@ -31,7 +31,7 @@
 <div>Difficulty: {{difficulty}}</div>
 <div>Grid Size: {{grid_size}}</div>
 <h4>Settings:</h4>
-<a href="" ng-click="grid_size = increase(grid_size, 1, 6)"><i class="fa fa-th-large"></i>Grid Size {{grid_size*grid_size}}</a>
+<a href="" ng-click="grid_size = increase(grid_size, 1, 5)"><i class="fa fa-th-large"></i>Grid Size {{grid_size*grid_size}}</a>
 <a href="" ng-click="difficulty = increase(difficulty, 1, 6)"><i class="fa fa-arrow-left"></i>{{difficulty}}-Back</a>
 <a href="" ng-click="colors_on = !colors_on">
   <i class="fa fa-tint"></i>Colors 
@@ -49,15 +49,14 @@
   <span ng-show="!math_on">Off</span>
 </a>
 
-
 <h4>Other:</h4>
 <a href="" ng-click=""><i class="fa fa-heart text-danger"></i>Please Donate</a>
 <a href="" ng-click=""><i class="fa fa-info-circle"></i>How to Play</a>
 
 <div class="dark-border">
   <div class="grid">
-    <div ng-repeat="cell in cells">
-      {{cell}}
+    <div ng-repeat="cell in grid()">
+      {{cell}}asdfa
     </div>
   </div>
 </div>

@@ -4,8 +4,9 @@ function GameCtrl($scope) {
   $scope.difficulty = 1;
 
   $scope.grid_size = 3;
-  $scope.grid = [{color:'red'}];
-
+  $scope.grid = function() {
+    return Array(Math.pow($scope.grid_size, 2));
+  };
 
   $scope.colors_on = false;
   $scope.audio_on = false;
@@ -17,11 +18,6 @@ function GameCtrl($scope) {
 
   $scope.increase = function(value, minimum, maximum) {
         return Math.max((value + 1) % maximum, minimum);
-  };
-
-  $scope.cells = function() {
-    grid = 
-
   };
 
   $scope.start = function() {
