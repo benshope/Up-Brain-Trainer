@@ -3,7 +3,10 @@
 function GameCtrl($scope) {
   $scope.difficulty = 1;
 
-  $scope.grid_size = 1;
+  $scope.grid_size = 3;
+  $scope.grid = [{color:'red'}];
+
+
   $scope.colors_on = false;
   $scope.audio_on = false;
   $scope.math_on = false;
@@ -16,10 +19,10 @@ function GameCtrl($scope) {
         return Math.max((value + 1) % maximum, minimum);
   };
 
-  // $scope.grid = function() {
+  $scope.cells = function() {
+    grid = 
 
-
-  // };
+  };
 
   $scope.start = function() {
     // SET ONE ANSWER BUTTON THAT MOVES FORWARD
