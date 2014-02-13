@@ -1,43 +1,40 @@
 
 
-function GameCtrl($scope) {
-  $scope.difficulty = 1;
-
+function GameCtrl($scope, $timeout) {
+  $scope.playing = false;
+  $scope.nback = 1;
   $scope.grid_size = 3;
-  $scope.grid = function() {
-    return Array(Math.pow($scope.grid_size, 2));
-  };
-  $scope.grid_class = function() {
-    return 'grid-item-' + $scope.grid_size;
-  };
+  $scope.elapsed = 0;
 
-  $scope.training_options = [{name: 'Color', on: false, on_class: 'fa-square', off_class: 'fa-square-o'}, 
-                             {name: 'Audio', on: false, on_class: 'fa-volume-up', off_class: 'fa-volume-off'}, 
-                             {name: 'Math', on: false, on_class: 'fa-sort-numeric-asc', off_class: 'fa-sort-numeric-desc'}]
+  $scope.training_options = [
+    {name: 'Color', on: false, on_class: 'fa-square', off_class: 'fa-square-o'}, 
+    {name: 'Audio', on: false, on_class: 'fa-volume-up', off_class: 'fa-volume-off'}, 
+    {name: 'Math', on: false, on_class: 'fa-sort-numeric-asc', off_class: 'fa-sort-numeric-desc'}];
 
-  $scope.btn_class = function(btn) {
-    return btn.on ? btn.on_class : btn.off_class;
-  };
+  $scope.grid = function() { return Array(Math.pow($scope.grid_size, 2)); };
+  $scope.grid_class = function() { return 'grid-item-' + $scope.grid_size; };
 
-  $scope.btn_text = function(btn) {
-    return btn.on ? btn.name + " On" : btn.name + " Off";
-  };
+  $scope.btn_class = function(btn) { return btn.on ? btn.on_class : btn.off_class; };
+  $scope.btn_text = function(btn) { return btn.on ? (btn.name + ' On') : (btn.name + ' Off'); };
 
   $scope.items = [1, 3, 5, 7];
-
   $scope.current_item = $scope.items[Math.floor(Math.random() * $scope.items.length)];
 
-  $scope.increase_grid = function() {
-        $scope.grid_size = Math.max(($scope.grid_size + 1) % 5, 1);
-  };
+  $scope.increase_grid = function() { $scope.grid_size = Math.max(($scope.grid_size + 1) % 7, 1); };
+  $scope.increase_nback = function() { $scope.nback = Math.max(($scope.nback + 1) % 6, 1); };
 
-  $scope.increase = function(value, minimum, maximum) {
-        return Math.max((value + 1) % maximum, minimum);
+  $scope.run_timer = function() {
+    $scope.elapsed += 1;
+    $timeout(run_timer, 100);
   };
 
   $scope.start = function() {
     // SET ONE ANSWER BUTTON THAT MOVES FORWARD
+    $scope.playing = true;
     $scope.guesses = 0;
+    $scope.elapsed = 0;
+
+    $scope.run_timer();
 
     $scope.false_guesses = 0;
     $scope.true_guesses = 0;
@@ -46,38 +43,36 @@ function GameCtrl($scope) {
 
     $scope.current_item = null;
     $scope.past_items = [];
-
-    return $scope.next();
   };
 
-  $scope.next = function() {
-    $scope.current_item = $scope.items[Math.floor(Math.random() * $scope.items.length)];
-    $scope.past_items.push($scope.item);
+  // $scope.next = function() {
+  //   $scope.current_item = $scope.items[Math.floor(Math.random() * $scope.items.length)];
+  //   $scope.past_items.push($scope.item);
 
-    // TEST FOR END CONDITIONS
+  //   // TEST FOR END CONDITIONS
 
-  };
+  // };
 
-  $scope.start();
+  // $scope.start();
 
-  $scope.evaluate = function(guess) {
-    $scope.guesses += 1;
+  // $scope.evaluate = function(guess) {
+  //   $scope.guesses += 1;
 
-    if ($scope.past_items.length < $scope.difficulty) {
-        return $scope.next()
-    }
-    else {
-      // CHECK THEIR ANSWER
-      item_nback = $scope.visual_queue[-$scope.difficulty];
-      if (item_nback === guess) {
-        $scope.true_guesses += 1;
-        return $scope.next();
-      }
-      else {
-        $scope.false_guesses +=1;
-      }
-    }
-  };
+  //   if ($scope.past_items.length < $scope.nback) {
+  //       return $scope.next()
+  //   }
+  //   else {
+  //     // CHECK THEIR ANSWER
+  //     item_nback = $scope.visual_queue[-$scope.nback];
+  //     if (item_nback === guess) {
+  //       $scope.true_guesses += 1;
+  //       return $scope.next();
+  //     }
+  //     else {
+  //       $scope.false_guesses +=1;
+  //     }
+  //   }
+  // };
 
   // ADD THE FUNCTIONS TO EVALUATE IF THE USER PRESSED THE RIGHT THING
   // Mousetrap.bind('up', function(e) {
