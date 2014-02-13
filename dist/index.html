@@ -38,11 +38,9 @@
 <a href="" ng-click="difficulty = increase(difficulty, 1, 6)"><i class="fa fa-arrow-left"></i>{{difficulty}}-Back</a><br>
 
 
-<a href="" ng-repeat="option in training_options" ng-click="option.on = !option.on">
-  <i class="fa" ng-class="{'{{option.icon}}': option.on, '{{option.off_icon}}': !option.on}"></i>
-  {{option.name}}
-  <span ng-show="option.on">On</span>
-  <span ng-show="!option.on">Off</span>
+<a href="" ng-repeat="btn in training_options" ng-click="btn.on = !btn.on">
+  <i class="fa" ng-class="btn_class(btn)"></i>
+  {{btn_text(btn)}}
 </a>
 <br>
 

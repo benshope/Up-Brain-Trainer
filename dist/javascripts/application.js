@@ -11,13 +11,17 @@ function GameCtrl($scope) {
     return 'grid-item-' + $scope.grid_size;
   };
 
-  $scope.color_on = false;
-  $scope.audio_on = false;
-  $scope.math_on = false;
+  $scope.training_options = [{name: 'Color', on: false, on_class: 'fa-square', off_class: 'fa-square-o'}, 
+                             {name: 'Audio', on: false, on_class: 'fa-volume-up', off_class: 'fa-volume-off'}, 
+                             {name: 'Math', on: false, on_class: 'fa-sort-numeric-asc', off_class: 'fa-sort-numeric-desc'}]
 
-  $scope.training_options = [{name: 'Color', on: false, on_icon: 'fa-square', off_icon: 'fa-square-o'}, 
-                             {name: 'Audio', on: false, on_icon: 'fa-volume-up', off_icon: 'fa-volume-off'}, 
-                             {name: 'Math', on: false, on_icon: 'fa-sort-numeric-asc', off_icon: 'fa-sort-numeric-desc'}]
+  $scope.btn_class = function(btn) {
+    return btn.on ? btn.on_class : btn.off_class;
+  };
+
+  $scope.on_off = function(torf) {
+    return torf ? "On" : "Off";
+  };
 
   $scope.items = [1, 3, 5, 7];
 
