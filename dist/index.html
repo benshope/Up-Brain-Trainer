@@ -24,7 +24,7 @@
 
 <body ng-controller="GameCtrl">
 
-<h1 class="center"><i class="fa fa-asterisk"></i> Zen Back {{elapsed}}</h1>
+<h1 class="center"><i class="fa fa-asterisk"></i> Zen Back {{elapsed | date:'HH:mm:ss Z'}}</h1>
 
 <div class="dark-border">
   <div class="grid">
@@ -44,7 +44,7 @@
 <br>
 
 <a href="" ng-click=""><i class="fa fa-heart"></i>Please Donate</a>
-<a href="" ng-click="run_timer()"><i class="fa fa-play"></i>Play</a>
+<a href="" ng-click="start()"><i class="fa fa-play"></i>Play</a>
 <a href="" ng-click=""><i class="fa fa-info-circle"></i>How to Play</a>
 
 <!-- <canvas id="surface" width="1677" height="283"></canvas>

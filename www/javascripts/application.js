@@ -25,7 +25,7 @@ function GameCtrl($scope, $timeout) {
 
   $scope.run_timer = function() {
     $scope.elapsed += 1;
-    $timeout(run_timer, 100);
+    $timeout($scope.run_timer, 100);
   };
 
   $scope.start = function() {
