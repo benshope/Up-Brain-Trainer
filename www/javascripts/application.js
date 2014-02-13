@@ -11,9 +11,9 @@ function GameCtrl($scope) {
     return 'grid-item-' + $scope.grid_size;
   };
 
-  $scope.colors_on = false;
-  $scope.audio_on = false;
-  $scope.math_on = false;
+  $scope.training_options = [{name: 'Color', on: false, icon: 'fa-square', off_icon: 'fa-square-o'}, 
+                             {name: 'Audio', on: false, icon: 'fa-volume-up', off_icon: 'fa-volume-off'}, 
+                             {name: 'Math', on: false, icon: 'fa-sort-numeric-asc', off_icon: 'fa-sort-numeric-desc'}]
 
   $scope.items = [1, 3, 5, 7];
 

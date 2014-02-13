@@ -25,34 +25,6 @@
 <body ng-controller="GameCtrl">
 
 <h2 class="center">Zen Back</h2>
-<div>Current Index: {{current_item}}</div>
-<a href="" ng-click="next()">Next</a>
-
-<div>Difficulty: {{difficulty}}</div>
-<div>Grid Size: {{grid_size}}</div>
-<h4>Settings:</h4>
-<a href="" ng-click="increase_grid()"><i class="fa fa-th-large"></i>Grid Size: {{grid_size*grid_size}}</a><br>
-<a href="" ng-click="difficulty = increase(difficulty, 1, 6)"><i class="fa fa-arrow-left"></i>{{difficulty}}-Back</a><br>
-<a href="" ng-click="colors_on = !colors_on">
-  <i class="fa fa-tint"></i>Colors 
-  <span ng-show="colors_on">On</span>
-  <span ng-show="!colors_on">Off</span>
-</a><br>
-<input type="checkbox" ng-model="audio_on">
-<a href="" ng-click="audio_on = !audio_on">
-  <i class="fa" ng-class="{'fa-volume-up': audio_on, 'fa-volume-off': !audio_on}"></i>Audio 
-  <span ng-show="audio_on">On</span>
-  <span ng-show="!audio_on">Off</span>
-</a><br>
-<a href="" ng-click="math_on = !math_on">
-  <i class="fa" ng-class="{'fa-sort-numeric-asc': math_on, 'fa-sort-numeric-desc': !math_on}"></i>Math 
-  <span ng-show="math_on">On</span>
-  <span ng-show="!math_on">Off</span>
-</a>
-
-<h4>Other:</h4>
-<a href="" ng-click=""><i class="fa fa-heart text-danger"></i>Please Donate</a>
-<a href="" ng-click=""><i class="fa fa-info-circle"></i>How to Play</a>
 
 <div class="dark-border">
   <div class="grid">
@@ -61,6 +33,21 @@
     </div>
   </div>
 </div>
+
+<a href="" ng-click="increase_grid()"><i class="fa fa-th"></i>Grid Size: {{grid_size*grid_size}}</a>
+<a href="" ng-click="difficulty = increase(difficulty, 1, 6)"><i class="fa fa-arrow-left"></i>{{difficulty}}-Back</a><br>
+
+
+<a href="" ng-repeat="option in training_options" ng-click="option.on = !option.on">
+  <i class="fa" ng-class="{'{{option.icon}}': option.on, '{{option.off_icon}}': !option.on}"></i>
+  {{option.name}}
+  <span ng-show="option.on">On</span>
+  <span ng-show="!option.on">Off</span>
+</a>
+<br>
+
+<a href="" ng-click=""><i class="fa fa-heart text-danger"></i>Please Donate</a>
+<a href="" ng-click=""><i class="fa fa-info-circle"></i>How to Play</a>
 
 <!-- <canvas id="surface" width="1677" height="283"></canvas>
 <div style="display:none;" id="background"></div> -->
