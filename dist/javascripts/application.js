@@ -7,6 +7,9 @@ function GameCtrl($scope) {
   $scope.grid = function() {
     return Array(Math.pow($scope.grid_size, 2));
   };
+  $scope.grid_class = function() {
+    return 'grid-item-' + $scope.grid_size;
+  };
 
   $scope.colors_on = false;
   $scope.audio_on = false;
@@ -15,6 +18,10 @@ function GameCtrl($scope) {
   $scope.items = [1, 3, 5, 7];
 
   $scope.current_item = $scope.items[Math.floor(Math.random() * $scope.items.length)];
+
+  $scope.increase_grid = function() {
+        $scope.grid_size = Math.max(($scope.grid_size + 1) % 5, 1);
+  };
 
   $scope.increase = function(value, minimum, maximum) {
         return Math.max((value + 1) % maximum, minimum);

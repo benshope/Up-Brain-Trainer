@@ -31,18 +31,19 @@
 <div>Difficulty: {{difficulty}}</div>
 <div>Grid Size: {{grid_size}}</div>
 <h4>Settings:</h4>
-<a href="" ng-click="grid_size = increase(grid_size, 1, 5)"><i class="fa fa-th-large"></i>Grid Size {{grid_size*grid_size}}</a>
-<a href="" ng-click="difficulty = increase(difficulty, 1, 6)"><i class="fa fa-arrow-left"></i>{{difficulty}}-Back</a>
+<a href="" ng-click="increase_grid()"><i class="fa fa-th-large"></i>Grid Size: {{grid_size*grid_size}}</a><br>
+<a href="" ng-click="difficulty = increase(difficulty, 1, 6)"><i class="fa fa-arrow-left"></i>{{difficulty}}-Back</a><br>
 <a href="" ng-click="colors_on = !colors_on">
   <i class="fa fa-tint"></i>Colors 
   <span ng-show="colors_on">On</span>
   <span ng-show="!colors_on">Off</span>
-</a>
+</a><br>
+<input type="checkbox" ng-model="audio_on">
 <a href="" ng-click="audio_on = !audio_on">
   <i class="fa" ng-class="{'fa-volume-up': audio_on, 'fa-volume-off': !audio_on}"></i>Audio 
   <span ng-show="audio_on">On</span>
   <span ng-show="!audio_on">Off</span>
-</a>
+</a><br>
 <a href="" ng-click="math_on = !math_on">
   <i class="fa" ng-class="{'fa-sort-numeric-asc': math_on, 'fa-sort-numeric-desc': !math_on}"></i>Math 
   <span ng-show="math_on">On</span>
@@ -55,8 +56,8 @@
 
 <div class="dark-border">
   <div class="grid">
-    <div ng-repeat="cell in grid()">
-      {{cell}}asdfa
+    <div ng-repeat="cell in grid()" style="-webkit-flex: 1 1 {{100/grid_size-2}}%;">
+      {{cell}}cell
     </div>
   </div>
 </div>
