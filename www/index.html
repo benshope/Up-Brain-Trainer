@@ -24,7 +24,9 @@
 
 <body ng-controller="GameCtrl">
 
-<h1 class="center"><i class="fa fa-asterisk"></i> Zen Back {{elapsed | date:'HH:mm:ss'}}</h1>
+<h1 class="center">
+  <i class="fa fa-asterisk"></i> Zen Back {{elapsed*10 | date:'mm:ss'}}:{{("0" + elapsed).slice(-2)}}
+</h1>
 
 <div class="dark-border">
   <div class="grid">
@@ -34,8 +36,10 @@
   </div>
 </div>
 
-<a href="" ng-click="increase_grid()"><i class="fa fa-th"></i>Grid Size: {{grid_size*grid_size}}</a>
-<a href="" ng-click="increase_nback()"><i class="fa fa-arrow-left"></i>{{nback}}-Back</a><br>
+<a href="" ng-click="increase_grid()"><i class="fa fa-th"></i>Grid: {{grid_size*grid_size}}</a>
+<a href="" ng-click="increase_nback()"><i class="fa fa-arrow-left"></i>{{nback}}-Back</a>
+<a href="" ng-click="increase_rounds()"><i class="fa fa-arrow-left"></i>{{rounds*10}} Rounds</a>
+<br>
 
 <a href="" ng-repeat="btn in training_options" ng-click="btn.on = !btn.on">
   <i class="fa" ng-class="btn_class(btn)"></i>

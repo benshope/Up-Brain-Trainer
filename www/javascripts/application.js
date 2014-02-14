@@ -5,6 +5,7 @@ function GameCtrl($scope, $timeout) {
   $scope.nback = 1;
   $scope.grid_size = 3;
   $scope.elapsed = 0;
+  $scope.rounds = 2;
 
   $scope.training_options = [
     {name: 'Color', on: false, on_class: 'fa-square', off_class: 'fa-square-o'}, 
@@ -22,10 +23,11 @@ function GameCtrl($scope, $timeout) {
 
   $scope.increase_grid = function() { $scope.grid_size = Math.max(($scope.grid_size + 1) % 7, 1); };
   $scope.increase_nback = function() { $scope.nback = Math.max(($scope.nback + 1) % 6, 1); };
+  $scope.increase_rounds = function() { $scope.rounds = Math.max(($scope.rounds + 1) % 6, 1); };
 
   $scope.run_timer = function() {
     $scope.elapsed += 1;
-    $timeout($scope.run_timer, 100);
+    $timeout($scope.run_timer, 10);
   };
 
   $scope.start = function() {
