@@ -1,4 +1,4 @@
-Up Brain Trainer
+Up Brain Trainer (NOT THE REAL CODE, DON'T WASTE TIME LOOKING AT THIS)
 ===============
 
 This app is a cross-platform mobile app written with Steroids.  My goal is to make a minimalist, friendly space for a user to perform n-back brain training.
