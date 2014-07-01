@@ -1,5 +1,5 @@
 {
-  "name": "zenback",
+  "name": "upbraintrainer",
   "version": "0.0.1",
   "authors": [
   ],
@@ -12,7 +12,6 @@
     "tests"
   ],
   "dependencies": {
-    "steroids-js": "3.1.x",
-    "angular": "1.0.7"
+    "steroids-js": "3.1.x"
   }
 }

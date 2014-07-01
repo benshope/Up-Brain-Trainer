@@ -1,4 +1,4 @@
-Up Brain Trainer (BROKEN CODE - DO NOT READ)
+Up Brain Trainer
 ===============
 
 This app is a cross-platform mobile app written with Steroids.  My goal is to make a minimalist, friendly space for a user to perform n-back brain training.
@@ -15,3 +15,13 @@ To Do
  - Tracking Progress
  - Leaderboards
  - Responsive Emotional Feedback
+
+
+Test in Browser
+ - ionic serve
+
+Test on Mobile Device
+ - steroids connect --watch
+
+Publish to Web and Mobile
+ - git commit -am 'Commit' && git push && steroids deploy && appcfg.py --oauth2 update .

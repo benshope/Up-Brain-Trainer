@@ -1,60 +1,91 @@
-<!DOCTYPE html>
-<html ng-app>
+<html ng-app="myApp">
 <head>
-  <title>Zen Back</title>
+  <title>UP Brain Trainer</title>
   <meta charset="utf8">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
-  <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
-  <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.css" />
-  <link rel="stylesheet" href="/stylesheets/application.css" />
+  <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link  href="style.css" rel="stylesheet">
 
-  <!--  <script src="/javascripts/onerror.js"></script>
-  <script src="/javascripts/console.log.js"></script> -->
-  <script src="/components/steroids-js/steroids.js"></script>
-  <script src="/cordova.js"></script>
-  <script src="/components/angular/angular.min.js"></script>
-  <!-- <script src="/components/underscore/underscore-min.js"></script>
-  <script src="/components/restangular/dist/restangular.min.js"></script>
-  <script src="/vendor/hammerjs/hammer.min.js"></script>
-  <script src="/vendor/angular-hammer/angular-hammer.js"></script> -->
-  <!-- <script src="/javascripts/zepto.js"></script> -->
-  <script src="/javascripts/application.js"></script>
+  <script src="lib/underscore/underscore-min.js"></script>
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <script src="http://localhost/cordova.js"></script>
+  <!-- <script src="/components/steroids-js/steroids.js"></script> -->
+  <script src="components/angular/angular.min.js"></script>
+  <script src="app.js"></script>
 </head>
 
 <body ng-controller="GameCtrl">
 
-<h1 class="center">
-  <i class="fa fa-asterisk"></i> Zen Back {{elapsed*10 | date:'mm:ss'}}:{{("0" + elapsed).slice(-2)}}
-</h1>
+<div id="top"  class="bar bar-header bar-positive {{'bar-' + header_background}}">
+  <a href="http://benshope.com"><button class="button button-icon icon ion-paper-airplane white logo"></button></a>
+  <div class="h1 title" style="margin-left: 0px; margin-right: 0px;">
+    <span ng-hide="playing" href="" ng-click="start()">
+      UP <b>Brain Trainer</b>
+    </span>
+    <span ng-show="playing" ng-click="playing = toggle(playing)" href="">
+      {{elapsed | date:'mm:ss'}}
+    </span>
+    <div id="progress" ng-show="playing" class="bg-one" style="position: absolute; height: 100%; width: {{100*((turns+1)-turn)/(turns+nback+1)}}%; top: 0px; right: 0px;"></div>
+  </div>
+  <button class="button button-clear button-positive" ng-click="playing = toggle(playing)">
+    <i class="fa fa-times white" ng-show="playing">&nbsp;&nbsp;</i>
+  </button>
+</div>
 
-<div class="dark-border">
-  <div class="grid">
-    <div ng-repeat="cell in grid()" style="-webkit-flex: 1 1 {{100/grid_size-2}}%;">
-      {{cell}}cell
+<div id="middle" class="flex" style="height: {{window_height()-176}}px;">
+  <div ng-hide="playing" class="flex center padding large-text">
+    <span id="info" ng-click="start()" ng-hide="played">
+        Working with this N-Back brain training app for just 10 minutes a day will measurably increase your working memory, mindfulness, and focus.
+    </span>
+    <span id="scores" ng-click="start()" ng-show="played">
+      <p>Great Work!</p>
+      <p>Last: {{last_correct + "" | limitTo: 4}}/{{last_turns}} - {{last_elapsed | date:'mm:ss'}}</p>
+      <p>Best: {{best_correct + "" | limitTo: 4}}/{{best_turns}} - {{best_elapsed | date:'mm:ss'}}</p>
+    </span>
+  </div>
+
+  <div id="board" ng-show="playing" ng-click="toggle_all()" ng-repeat="cell in grid()" class="flex large-text" style="-webkit-flex-basis: {{100/(grid_side()+1)}}%; flex-basis: {{100/(grid_side()+1)}}%; background-color: {{cell_color(cell)}};">
+    <div class="flex center" style="font-size: {{22/(grid_side()+1)}}vw;"><a>{{cell_number(cell)}}</a></div>
+  </div>
+</div>
+
+<div id="bottom" class="flex col">
+
+  <div id="settings" ng-hide="playing" class="flex wide wrap-three flex-1 center-1">
+    <div href="" ng-click="increase_nback()" style="background-color: rgba(0,0,0,0.{{nback}});" class="flex">
+        <i class="fa fa-mail-reply">&nbsp;{{nback}}-Back</i>
+    </div>
+    <div href="" ng-click="increase_turns()" style="background-color: rgba(0,0,0,0.{{turns}});">
+        <i class="fa fa-clock-o">&nbsp;{{turns}} Turns</i>
+    </div>
+    <div href="" ng-click="increase_grid()" style="background-color: rgba(0,0,0,0.{{grid_side()+1}});">
+        <i class="fa fa-th">&nbsp;Grid of {{grid_size}}</i>
+    </div>
+    <div href="" ng-repeat="category in cats" ng-show="category.optional" ng-click="category.on = toggle(category.on)" ng-class="category.on ? 'bg-six' : ' '">
+      <i class="fa" ng-class="category.on ? category.on_icon : category.off_icon">&nbsp;{{category.on ? category.name + ' On' : category.name + ' Off'}}</i>
+    </div>
+  </div>
+
+  <div id="instructions" ng-show="playing && turn < 1" ng-click="next_turn()" class="flex center padding bg-three">
+    <a>Memorize the {{active_cat_names('and') | lowercase}} on this turn and, in {{nback}} turn{{(nback > 1) ? 's' : ''}} from now, select if the {{active_cat_names('or') | lowercase}} {{(active_cats().length > 1) ? 'are' : 'is'}} the same.</a>
+  </div>
+
+  <div id="input" ng-show="playing && turn >= 1" class="flex bg-one giant-text">
+    <div href="" ng-repeat="category in cats" ng-show="category.on" ng-class="category.match ? 'bg-white' : ' '" ng-click="category.match = toggle(category.match)" class="flex center" style="-webkit-flex-basis: {{100/active_cats().length - 2}}%; flex-basis: {{100/active_cats().length - 2}}%;">
+      <i class="fa" ng-class="category.on_icon" style="position:relative;"><i class="fa white" ng-class="category.match ? 'fa-check-circle green' : 'fa-times-circle red'" style="position:absolute; margin-left:-2.6%;margin-top:-2%; font-size:50%;"></i></i>
     </div>
   </div>
 </div>
 
-<a href="" ng-click="increase_grid()"><i class="fa fa-th"></i>Grid: {{grid_size*grid_size}}</a>
-<a href="" ng-click="increase_nback()"><i class="fa fa-arrow-left"></i>{{nback}}-Back</a>
-<a href="" ng-click="increase_rounds()"><i class="fa fa-arrow-left"></i>{{rounds*10}} Rounds</a>
-<br>
-
-<a href="" ng-repeat="btn in training_options" ng-click="btn.on = !btn.on">
-  <i class="fa" ng-class="btn_class(btn)"></i>
-  {{ btn_text(btn) }}
-</a>
-<br>
-
-<a href="" ng-click=""><i class="fa fa-heart"></i>Please Donate</a>
-<a href="" ng-click="start()"><i class="fa fa-play"></i>Play</a>
-<a href="" ng-click=""><i class="fa fa-info-circle"></i>How to Play</a>
-
-<!-- <canvas id="surface" width="1677" height="283"></canvas>
-<div style="display:none;" id="background"></div> -->
+<div id="next" href="" ng-click="next_turn()" class="bar bar-footer bar-positive bar-{{playing ? header_background : 'positive'}}" style="position:absolute; width: 100%; bottom:0px;">
+  <div class="title">
+    <span ng-show="playing">{{'0' + turn | limitTo: -2}}/{{turns}}</span>
+    <span ng-hide="playing">Play </span>&nbsp;
+    <i class="fa" ng-class="!playing ? 'fa-play' : 'fa-step-forward'"></i>
+  </div>
+</div>
 
 </body>
-
 </html>
-
