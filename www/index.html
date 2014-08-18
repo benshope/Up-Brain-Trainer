@@ -19,8 +19,8 @@
 <body ng-controller="GameCtrl" class="big flex col bg-gray">
 
 <div id="top" ng-click="top_click()"  class="flex {{top_bg}} flex-1 center-1" style="position:relative;">
-  <div ><i class="fa fa-paper-plane"></i></div>
-  <div class="flex-5">
+  <div style="z-index:100;"><i class="fa fa-paper-plane"></i></div>
+  <div style="z-index:100;" class="flex-5">
     <span ng-hide="playing">
         <span style="font-weight: 200;">UP </span><span style="font-weight: 500;">Brain Trainer</span>
     </span>
@@ -28,34 +28,34 @@
       {{elapsed | date:'mm:ss'}}
     </span>
   </div>
-  <div><i class="large-text icon ion-ios7-close-empty white" ng-show="playing"></i></div>
+  <div style="z-index:100;"><i class="large-text icon ion-ios7-close-empty white" ng-show="playing"></i></div>
 
-  <div id="progress" class="bg-dark-1" ng-show="playing" style="width: {{100*((turns+1)-turn)/(turns+nback+1)}}%;"></div>
+  <div id="progress" class="bg-dark-3" ng-show="playing" style="z-index: 1; width: {{100*((turns+1)-turn)/(turns+nback+1)}}%;"></div>
 </div>
 
 <div class="flex flex-5">
 
-  <div id="start-screen" ng-hide="played || playing" class="flex center gray padding">
+  <div id="start-screen" ng-hide="played || playing" class="flex center gray">
       <a class="padding">N-Back exercises are an amazing way to quickly recharge your memory, mindfulness, and focus.</a>
   </div>
 
   <div id="scores" ng-show="played && !playing" class="flex col flex-1 center-1">
-    <div id="message"><a>{{congrat}}</a></div>
+    <div><a>{{congrat}}</a></div>
     <div class="bg-dark-5 white">
       <div>Last</div>
       <div>Best</div>
     </div>
     <div class="bg-dark-4 white">
-      <div>{{last_correct + "" | limitTo: 4}}/{{last_turns}}</div>
-      <div>{{best_correct + "" | limitTo: 4}}/{{best_turns}}</div>
+      <div>{{(last_correct/last_turns)*100 | number:0}}%</div>
+      <div>{{(best_correct/best_turns)*100 | number:0}}%</div>
     </div>
     <div class="bg-dark-3 white">
       <div>{{last_elapsed | date:'mm:ss'}}</div>
       <div>{{best_elapsed | date:'mm:ss'}}</div>
     </div>
     <div class="bg-dark-2 white">
-    <!-- <a href="market://details?id=03923847225909863863"><i class="icon ion-heart">&nbsp;</i>&nbsp;Review</a> -->
-    <a href="itms-apps://itunes.apple.com/app/id828660771" style="color: white !important;"><i class="icon ion-heart">&nbsp;</i>&nbsp;Review</a>
+      <a href="https://play.google.com/store/apps/details?id=com.benshope.upbraintrainer" style="color: white !important;" rel="external"><i class="icon ion-heart red">&nbsp;</i>&nbsp;Please Rate & Like</a>
+      <!-- <a href="itms-apps://itunes.apple.com/app/id828660771" style="color: white !important;"><i class="icon ion-heart red">&nbsp;</i>&nbsp;Please Rate & Like</a> -->
     </div>
   </div>
 
@@ -64,7 +64,7 @@
   </div>
 </div>
 
-<div ng-hide="playing" class="flex col flex-3 bg-blue">
+<div id="settings" ng-hide="playing" class="flex col flex-3 bg-blue">
   <div class="flex wide wrap-three flex-1 center-1 bg-light-2">
     <div  ng-click="increase_nback()" style="background-color: rgba(0,0,0,0.{{nback}});" class="flex">
         <span><i class="icon ion-ios7-albums">&nbsp;</i>&nbsp;{{nback}}-Back</span>
@@ -88,9 +88,9 @@
   </div>
 </div>
 
-<div id="playing_instructions" ng-click="next_turn()" ng-show="playing && turn < 1" class="flex flex-3 col bg-blue">
+<div id="playing-instructions" ng-click="next_turn()" ng-show="playing && turn < 1" class="flex flex-3 col bg-blue">
   <div>&nbsp;</div>
-  <div ng-show="turn < 1" class="flex flex-5 center bg-blue padding">
+  <div ng-show="turn < 1" class="flex flex-5 center padding">
     <a>Memorize the {{active_cat_names('and') | lowercase}} on this turn and, in {{nback}} turn{{(nback > 1) ? 's' : ''}} from now, select if the {{active_cat_names('or') | lowercase}} match{{(active_cats().length > 1) ? '' : 'es'}}.</a>
   </div>
   <div>&nbsp;</div>
@@ -101,10 +101,10 @@
     <div class="white {{top_bg}}">
       <i class="fa" ng-class="category.on_icon"></i>
     </div>
-    <div class="{{(category.match_delay) ? 'bg-green white' : 'green'}}" ng-click="set_tf(category.name, true)">
+    <div id="answer-match" class="{{(category.match) ? 'bg-light-green white' : 'green'}}" ng-click="set_tf(category.name, true)">
       <i class="large-text icon ion-ios7-checkmark-empty"></i>
     </div>
-    <div class="{{(category.match_delay != null && category.match_delay == false) ? 'bg-red white' : 'red bg-dark-1'}}" ng-click="set_tf(category.name, false)">
+    <div id="answer-no-match" class="{{(category.match != null && category.match == false) ? 'bg-light-red white' : 'red bg-dark-1'}}" ng-click="set_tf(category.name, false)">
       <i class="large-text icon ion-ios7-close-empty"></i>
     </div>
   </div>

@@ -1,8 +1,8 @@
 
 // SET UP AUDIO
 // steroids.audio.prime();
-// try { steroids.audio.prime(); }
-// catch(err) { console.log('No Steroids'); }
+try { steroids.audio.prime(); }
+catch(err) { console.log('No Steroids'); }
 game_sounds = [];
 game_sound_paths = [];
 
@@ -14,26 +14,6 @@ game_click = new Audio("audio/click.mp3");
 
 // CREATE THE APP WITHOUT TOUCH DELAY
 myApp = angular.module('myApp', ['ngTouch']);
-
-// ONE CONTROLLER WITH THE ABILITY TO TIMEOUT (Change this to CSS3 Animations)
-// Ideally this should be broken into factories, directives, etc.
-// Later...
-myApp.directive('fastClick', ['$parse', function ($parse) {
-    return function (scope, element, attr) {
-      var fn = $parse(attr['fastClick']);
-      var initX, initY, endX, endY;
-      var elem = element;
-      var maxMove = 4;
-
-      elem.bind('touchstart', function (event) {
-          event.preventDefault();
-          initX = endX = event.touches[0].clientX;
-          initY = endY = event.touches[0].clientY;
-          scope.$apply(function () { fn(scope, { $event: event }); });
-      });
-    };
-  }
-]);
 
 myApp.controller('GameCtrl', function($scope, $timeout) {
 
@@ -47,12 +27,13 @@ myApp.controller('GameCtrl', function($scope, $timeout) {
     sum:    { optional: true,  on: false, items: _.range(20), name: 'Sum', on_icon: 'icon ion-ios7-plus', off_icon: 'icon ion-ios7-plus-outline'}
   };
 
-  $scope.top_bg = 'bg-blue';
-  $scope.playing = false;
-  $scope.played = false;
-  $scope.best_correct = -100;
-  $scope.best_turns = 10;
-  $scope.best_elapsed = 10000000;
+  // No Localstorage on Chrome
+  // $scope.top_bg = 'bg-blue';
+  // $scope.playing = false;
+  // $scope.played = false;
+  // $scope.best_correct = -100;
+  // $scope.best_turns = 10;
+  // $scope.best_elapsed = 10000000;
 
   $scope.nback = JSON.parse(localStorage.getItem('nback')) || 2;
   $scope.turns = JSON.parse(localStorage.getItem('turns')) || 10;
@@ -60,6 +41,13 @@ myApp.controller('GameCtrl', function($scope, $timeout) {
   $scope.cats.audio.on = JSON.parse(localStorage.getItem('audio_on')) || false;
   $scope.cats.color.on = JSON.parse(localStorage.getItem('color_on')) || false;
   $scope.cats.sum.on = JSON.parse(localStorage.getItem('sum_on')) || false;
+
+  $scope.nback = 2;
+  $scope.turns = 10;
+  $scope.grid_size =  9;
+  $scope.cats.audio.on =  false;
+  $scope.cats.color.on =  false;
+  $scope.cats.sum.on =  false;
 
   var user_click = function() {
     localStorage.setItem('nback', $scope.nback);
@@ -70,8 +58,8 @@ myApp.controller('GameCtrl', function($scope, $timeout) {
     localStorage.setItem('sum_on', $scope.cats.sum.on);
     if ($scope.cats.audio.on) {
       // steroids.audio.play('audio/click.mp3');
-      // try { steroids.audio.play('audio/click.mp3'); }
-      // catch(err) { game_click.play(); }
+      try { steroids.audio.play('audio/click.mp3'); }
+      catch(err) { game_click.play(); }
     }
   };
 
@@ -172,7 +160,6 @@ myApp.controller('GameCtrl', function($scope, $timeout) {
     $scope.turn += 1;
     if ($scope.turn <= $scope.turns) {
       for (x in $scope.cats) { $scope.cats[x].match = null; }
-      $timeout(function() { for (x in $scope.cats) { $scope.cats[x].match_delay = null; } }, 300);
       var push_random_indexes = function() {
         for (x in $scope.cats) {
           var index = _.random($scope.cats[x].items.length - 1);
@@ -189,24 +176,28 @@ myApp.controller('GameCtrl', function($scope, $timeout) {
       set_sum_string();
       if ($scope.cats.audio.on) {
         // steroids.audio.play(game_sound_paths[_.last($scope.cats.audio.indexes)]);
-        // try { steroids.audio.play(game_sound_paths[_.last($scope.cats.audio.indexes)]); }
-        // catch(err) { game_sounds[_.last($scope.cats.audio.indexes)].play(); }
+        try { steroids.audio.play(game_sound_paths[_.last($scope.cats.audio.indexes)]); }
+        catch(err) { game_sounds[_.last($scope.cats.audio.indexes)].play(); }
       }
     }
     else {
-      $scope.last_elapsed = $scope.elapsed;
-      $scope.last_correct = $scope.correct;
-      $scope.last_turns = $scope.turns;
-      var last_score = ($scope.last_correct-($scope.last_turns/2))/$scope.last_elapsed;
-      var best_score = ($scope.best_correct-($scope.best_turns/2))/$scope.best_elapsed;
-      if (!$scope.played || best_score < last_score) {
-        $scope.best_elapsed = $scope.elapsed;
-        $scope.best_correct = $scope.correct;
-        $scope.best_turns = $scope.turns;
+      var end_game = function() {
+        $scope.last_elapsed = $scope.elapsed;
+        $scope.last_correct = $scope.correct;
+        $scope.last_turns = $scope.turns;
+        var last_score = $scope.last_correct/$scope.last_turns;
+        var best_score = $scope.best_correct/$scope.best_turns;
+        var better_score = best_score < last_score;
+        var tie_but_faster = (best_score == last_score) && ($scope.last_elapsed/$scope.last_turns < $scope.best_elapsed/$scope.best_turns);
+        if (!$scope.played || better_score || tie_but_faster) {
+          $scope.best_elapsed = $scope.elapsed;
+          $scope.best_correct = $scope.correct;
+          $scope.best_turns = $scope.turns;
+        }
+        $scope.playing = false;
+        $scope.played = true;
       }
-      $scope.playing = false;
-      $scope.played = true;
-      user_click();
+      end_game();
     }
   };
 
@@ -243,7 +234,6 @@ myApp.controller('GameCtrl', function($scope, $timeout) {
       var cat = $scope.cats[keys[x]];
       if (cat.name == cat_name) {
         $scope.cats[keys[x]].match = tf;
-        $scope.cats[keys[x]].match_delay = tf;
       }
     }
     user_click();
