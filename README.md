@@ -1,7 +1,7 @@
 UP Brain Trainer
 ===============
 
-This app is a cross-platform mobile app written with Steroids.  My goal was to make a minimalist, friendly space for a user to perform n-back brain training.
+This app is a cross-platform mobile app.  My goal was to make a minimalist, friendly space for a user to perform n-back brain training.
 
 N-back is a mental exercise/game that improves working memory (short term memory) and fluid intelligence.
 
